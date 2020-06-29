@@ -48,7 +48,7 @@ void swap(int& a, int& b) {
 void reset(int* begin, int* end) {
 	// surtout pas  ++ ou +1 on est sur des adr
 	while (begin != end) {
-		*begin = 0; 
+		*begin = 0;
 		++begin;
 	}
 }
@@ -86,12 +86,33 @@ int main()//int argc, char** argv
 	//tab.size();
 	//int tab1[10]{ 12, 78, -12 };
 	//display(begin(tab1), end(tab1));// end au lieu de tab + 10
-	
-	int tab[]{12, 3, 78, -12, 3, -2};
+
+	int tab[]{ 12, 3, 78, -12, 3, -2 };
+	for (int n : tab)
+	{
+		cout << n << endl;
+	}
+	unsigned cptNeg{};
+	for (int n : tab)
+	{
+		if (n < 0) {
+			cptNeg++;
+		}
+	}
+	cout << "cptNeg:" << cptNeg << "\n";
+
+	unsigned nbOccur{};
+	for (int n : tab)
+	{
+		if (n == 3) nbOccur++;
+	}
+	cout << "nbOccur:"  << nbOccur << "\n";
+
+
 	cout << "Neg:" << nbNegatifs(begin(tab), end(tab)) << endl;
-	cout << "Count:" <<count(begin(tab), end(tab), 3) << endl; //2	
-	
-	
+	cout << "Count:" << count(begin(tab), end(tab), 3) << endl; //2	
+
+
 	display(tab, end(tab));// end au lieu de tab + 10
 	//cout << tab[0] << endl; // nawak
 	reset(tab, end(tab));
