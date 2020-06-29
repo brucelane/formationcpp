@@ -55,21 +55,50 @@ void reset(int* begin, int* end) {
 void display(int* begin, int* end) {
 	// surtout pas  ++ ou +1 on est sur des adr
 	while (begin != end) {
-		cout << *begin << " ";
+		cout << *begin << ", ";
 		++begin;
 	}
+	cout << endl;
 }
-
+unsigned nbNegatifs(int* begin, int* end) {
+	// surtout pas  ++ ou +1 on est sur des adr
+	unsigned cpt{ 0 };
+	while (begin != end) {
+		if (*begin < 0) { cpt++; };
+		++begin;
+	}
+	cout << endl;
+	return cpt;
+}
+unsigned count(int* begin, int* end, int value) {
+	// surtout pas  ++ ou +1 on est sur des adr
+	unsigned cpt{ 0 };
+	while (begin != end) {
+		if (*begin == value) { cpt++; };
+		++begin;
+	}
+	cout << endl;
+	return cpt;
+}
 int main()//int argc, char** argv
 {
 	//array<int, 10> tab;// utiliser au lieu tab[10]
 	//tab.size();
-	int tab[10];
-	display(tab, tab + 10);
-	cout << tab[0] << endl; // nawak
-	reset(tab, tab + 10);
-	cout << tab[0] << endl; // 0
-	display(tab, tab + 10);
+	//int tab1[10]{ 12, 78, -12 };
+	//display(begin(tab1), end(tab1));// end au lieu de tab + 10
+	
+	int tab[]{12, 3, 78, -12, 3, -2};
+	cout << "Neg:" << nbNegatifs(begin(tab), end(tab)) << endl;
+	cout << "Count:" <<count(begin(tab), end(tab), 3) << endl; //2	
+	
+	
+	display(tab, end(tab));// end au lieu de tab + 10
+	//cout << tab[0] << endl; // nawak
+	reset(tab, end(tab));
+	//cout << tab[0] << endl; // 0
+	display(tab, end(tab));
+
+
 	// pour remplacer un switch à bannir
 	/*std::map<int, std::string> dico{
 		{0, "bonjour"},
