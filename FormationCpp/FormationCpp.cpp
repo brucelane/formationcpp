@@ -87,7 +87,7 @@ int main()//int argc, char** argv
 	//int tab1[10]{ 12, 78, -12 };
 	//display(begin(tab1), end(tab1));// end au lieu de tab + 10
 
-	int tab[]{ 12, 3, 78, -12, 3, -2 };
+	int tab[]{ 12, 3, 78, -12, 3, -2, 3 };
 	for (int n : tab)
 	{
 		cout << n << endl;
@@ -102,9 +102,12 @@ int main()//int argc, char** argv
 	cout << "cptNeg:" << cptNeg << "\n";
 
 	unsigned nbOccur{};
+	const int value{ 3 };
 	for (int n : tab)
 	{
-		if (n == 3) nbOccur++;
+		if (n == value) { 
+			nbOccur++;
+		}
 	}
 	cout << "nbOccur:"  << nbOccur << "\n";
 
