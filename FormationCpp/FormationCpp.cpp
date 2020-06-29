@@ -5,7 +5,9 @@
 #include <algorithm>
 #include <string>
 #include <map>
-//using namespace std;
+#include <array>
+//
+using namespace std;
 
 using Dimension = int; // peut être changé en double
 using Longueur = Dimension;
@@ -17,7 +19,7 @@ void f() {};
 void f(int) {};
 void f(float) {};
 //byval in
-void reset(int val) {
+/*void reset(int val) {
 	val = 99;
 }
 //byref in out
@@ -42,6 +44,9 @@ void swap(int& a, int& b) {
 	int c{ a };
 	a = b;
 	b = c;
+}*/
+void reset(int* begin, int* end) {
+	;
 }
 int main()//int argc, char** argv
 {
@@ -55,7 +60,11 @@ int main()//int argc, char** argv
 	std::cout << dico[choix] << std::endl;
 	// pour remplacer un switch
 
-	int n{}; // 0 par défaut
+	//array<int, 10> tab;// utiliser au lieu tab[10]
+	//tab.size();
+	int tab[10];
+	reset(tab, tab + 10);
+	/*int n{}; // 0 par défaut
 	reset(n); // byval
 	std::cout << " byval " << n << std::endl;
 	riset(n); // byref
@@ -73,6 +82,7 @@ int main()//int argc, char** argv
 	swap(a, b);
 	swap(&a, &b);
 	std::cout << a << " " << b << std::endl; // 1 0 
+	*/
 	/* args
 	std::cout << argc << " args " << std::endl;
 	//std::cout << argv[0] << " argv0 " << std::endl;
