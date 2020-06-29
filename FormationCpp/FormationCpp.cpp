@@ -2,6 +2,9 @@
 //
 
 #include <iostream>
+#include <algorithm>
+#include <string>
+#include <map>
 //using namespace std;
 
 using Dimension = int; // peut être changé en double
@@ -42,6 +45,16 @@ void swap(int& a, int& b) {
 }
 int main()//int argc, char** argv
 {
+	// pour remplacer un switch à bannir
+	std::map<int, std::string> dico{
+		{0, "bonjour"},
+		{1, "hi"},
+		{2, "tag"},
+	};
+	int choix{ 2 };
+	std::cout << dico[choix] << std::endl;
+	// pour remplacer un switch
+
 	int n{}; // 0 par défaut
 	reset(n); // byval
 	std::cout << " byval " << n << std::endl;
@@ -52,12 +65,11 @@ int main()//int argc, char** argv
 	getSurf(Longueur{ 12 }, Largeur{ 7 }); // clean
 	int a{ };
 	int b{ 1 };
-	int max{a > b ? a : b};
-	
-	if (a > 0 and b > 1) { // and et or supportés en c++
+	int max{ a > b ? a : b };
 
+	if (a > 0 and b > 1) { // and et or supportés en c++
 	}
-	std::cout << a << " " << b << std::endl; // 0 1
+	std::cout << a << " " << b << std::min<int>(a, b) << std::endl; // 0 1
 	swap(a, b);
 	swap(&a, &b);
 	std::cout << a << " " << b << std::endl; // 1 0 
