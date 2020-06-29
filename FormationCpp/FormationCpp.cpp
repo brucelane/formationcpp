@@ -46,12 +46,32 @@ void swap(int& a, int& b) {
 	b = c;
 }*/
 void reset(int* begin, int* end) {
-	;
+	// surtout pas  ++ ou +1 on est sur des adr
+	while (begin != end) {
+		*begin = 0; 
+		++begin;
+	}
 }
+void display(int* begin, int* end) {
+	// surtout pas  ++ ou +1 on est sur des adr
+	while (begin != end) {
+		cout << *begin << " ";
+		++begin;
+	}
+}
+
 int main()//int argc, char** argv
 {
+	//array<int, 10> tab;// utiliser au lieu tab[10]
+	//tab.size();
+	int tab[10];
+	display(tab, tab + 10);
+	cout << tab[0] << endl; // nawak
+	reset(tab, tab + 10);
+	cout << tab[0] << endl; // 0
+	display(tab, tab + 10);
 	// pour remplacer un switch à bannir
-	std::map<int, std::string> dico{
+	/*std::map<int, std::string> dico{
 		{0, "bonjour"},
 		{1, "hi"},
 		{2, "tag"},
@@ -60,11 +80,8 @@ int main()//int argc, char** argv
 	std::cout << dico[choix] << std::endl;
 	// pour remplacer un switch
 
-	//array<int, 10> tab;// utiliser au lieu tab[10]
-	//tab.size();
-	int tab[10];
-	reset(tab, tab + 10);
-	/*int n{}; // 0 par défaut
+
+	int n{}; // 0 par défaut
 	reset(n); // byval
 	std::cout << " byval " << n << std::endl;
 	riset(n); // byref
@@ -81,7 +98,7 @@ int main()//int argc, char** argv
 	std::cout << a << " " << b << std::min<int>(a, b) << std::endl; // 0 1
 	swap(a, b);
 	swap(&a, &b);
-	std::cout << a << " " << b << std::endl; // 1 0 
+	std::cout << a << " " << b << std::endl; // 1 0
 	*/
 	/* args
 	std::cout << argc << " args " << std::endl;
