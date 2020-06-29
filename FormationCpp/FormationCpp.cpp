@@ -28,21 +28,21 @@ void riset2(int* val) {
 Surface getSurf(Longueur lng, Largeur lar = 10) {
 	return lng * lar;
 }
-// en C++
-void swap(int& a, int& b) {
-	int c{ a };
-	a = b;
-	b = c;
-}
 // en C moins lisible
 void swap(int* a, int* b) {
 	int c{ *a };
 	*a = *b;
 	*b = c;
 }
+// en C++ mieux avec refs que ptr du C
+void swap(int& a, int& b) {
+	int c{ a };
+	a = b;
+	b = c;
+}
 int main()//int argc, char** argv
 {
-	int n{};
+	int n{}; // 0 par défaut
 	reset(n); // byval
 	std::cout << " byval " << n << std::endl;
 	riset(n); // byref
@@ -52,6 +52,11 @@ int main()//int argc, char** argv
 	getSurf(Longueur{ 12 }, Largeur{ 7 }); // clean
 	int a{ };
 	int b{ 1 };
+	int max{a > b ? a : b};
+	
+	if (a > 0 and b > 1) { // and et or supportés en c++
+
+	}
 	std::cout << a << " " << b << std::endl; // 0 1
 	swap(a, b);
 	swap(&a, &b);
