@@ -63,7 +63,7 @@ int main()
 			cend(tab), 
 			[](int n) {return n >= 0;}
 		) << endl;
-	// begin lecture seule cbegin écriture
+	// cbegin lecture seule begin écriture
 	cout << *find_if(cbegin(tab), cend(tab), [](int n) {return n < 0; }) << endl;
 
 	sort(begin(tab), end(tab));
