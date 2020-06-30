@@ -27,16 +27,19 @@ const int* max_element(const int* begin, const int* end) {
 	}
 	return itor;
 }
-using func = int(*)(int, int);
+using func = int(*)(int, int); // avant C++11
 int add(int a, int b) { return a + b; }
 int sub(int a, int b) { return a - b; }
 void doIt(func f, int a, int b) {
 	cout << f(a, b) << endl;
 }
+void doThis(int(*f)(int, int), int a, int b) {
+	cout << f(a, b) << endl;
+}
 int main()
 {
-	func a{ add };
-	func s{ sub };
+	//inutile func a{ add };
+	//inutile func s{ sub };
 	doIt(add, 3, 7);
 	doIt(sub, 3, 7);
 

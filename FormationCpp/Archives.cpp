@@ -8,6 +8,22 @@
 using namespace std;
 
 
+/*
+fct ptr
+using func = int(*)(int, int); // avant C++11
+int add(int a, int b) { return a + b; }
+int sub(int a, int b) { return a - b; }
+void doIt(func f, int a, int b) {
+	cout << f(a, b) << endl;
+}
+{
+	//inutile func a{ add };
+	//inutile func s{ sub };
+	doIt(add, 3, 7);
+	doIt(sub, 3, 7);
+}
+*/
+
 using Dimension = int; // peut être changé en double
 using Longueur = Dimension;
 using Largeur = Dimension;
