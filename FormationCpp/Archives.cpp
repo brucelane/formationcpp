@@ -43,7 +43,7 @@ void swap(int& a, int& b) {
 	int c{ a };
 	a = b;
 	b = c;
-}*/
+}
 void reset(int* begin, int* end) {
 	// surtout pas  ++ ou +1 on est sur des adr
 	while (begin != end) {
@@ -58,7 +58,7 @@ void display(const int* begin, const int* end) {
 		++begin;
 	}
 	cout << endl;
-}
+}*/
 unsigned nbNegatifs(const int* begin, const int* end) {
 	// surtout pas  ++ ou +1 on est sur des adr
 	unsigned cpt{ 0 };
@@ -82,11 +82,11 @@ unsigned count(const int* begin, const int* end, int value) {
 }
 
 void principal() {//int argc, char** argv
-
+	/*
 	//array<int, 10> tab;// utiliser au lieu tab[10]
 //tab.size();
 //int tab1[10]{ 12, 78, -12 };
-//display(begin(tab1), end(tab1));// end au lieu de tab + 10
+//dis/*play(begin(tab1), end(tab1));// end au lieu de tab + 10
 
 	int tab[]{ 12, 3, 78, -12, 3, -2, 3 };
 	for (int& n : tab) // ne pas oublier, par ref
@@ -129,7 +129,7 @@ void principal() {//int argc, char** argv
 
 
 	// pour remplacer un switch à bannir
-	/*std::map<int, std::string> dico{
+	std::map<int, std::string> dico{
 		{0, "bonjour"},
 		{1, "hi"},
 		{2, "tag"},
@@ -157,8 +157,8 @@ void principal() {//int argc, char** argv
 	swap(a, b);
 	swap(&a, &b);
 	std::cout << a << " " << b << std::endl; // 1 0
-	*/
-	/* args
+	
+	 args
 	std::cout << argc << " args " << std::endl;
 	//std::cout << argv[0] << " argv0 " << std::endl;
 
