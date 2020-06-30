@@ -6,16 +6,24 @@ using namespace std;
 using Vitesse = int;
 using Acceleration = Vitesse;
 using Deceleration = Vitesse;
-using Immatriculation = string;
 // Ctrl+D Dupliquer la selection
 enum class Couleur { ROUGE, VERT, POURPRE };
-enum class Cylindree {CC_200, CC_250, CC_500, CC_2000, CC_4200};
+enum class Cylindree { CC_200, CC_250, CC_500, CC_2000, CC_4200 };
+
+class Moteur {
+	const Cylindree cylindree;
+public:
+	Moteur(Cylindree cylindree) :
+		cylindree{ cylindree }
+	{
+	}
+};
+
 class Voiture {
 private:
 	Couleur couleur;
-	const Cylindree cylindree;
+	Moteur moteur;
 	const Vitesse VITESSE_MAXIMUM = 129;
-	const Immatriculation immatriculation;
 	Vitesse vitesse{ 0 };
 	void SetVitesse(Vitesse vitesse) {
 		if (vitesse < VITESSE_MAXIMUM) {
@@ -25,12 +33,10 @@ private:
 	}
 
 public:
-	Voiture(Couleur couleur, Cylindree cylindree, Immatriculation immatriculation) :
-		couleur { couleur },
-		cylindree{ cylindree },
-		immatriculation{ immatriculation }
+	Voiture(Couleur couleur, Cylindree cylindree) :
+		couleur{ couleur },
+		moteur(cylindree)
 	{
-		
 	}
 	void demarrer(Vitesse vitesse) {
 		this->SetVitesse(vitesse);
@@ -49,7 +55,7 @@ public:
 
 int main()
 {
-	Voiture v1{ Couleur::ROUGE, Cylindree::CC_2000, "BA-134" };
+	Voiture v1{ Couleur::ROUGE, Cylindree::CC_2000 };
 	v1.demarrer(Vitesse{ 30 });
 	v1.accelerer(Acceleration{ 15 });
 	v1.ralentir(Deceleration{ 30 });
@@ -57,6 +63,6 @@ int main()
 
 	string s; // creation objet
 	s = "t"; // puis init
-	string s2{"r"}; // mieux pour performance
+	string s2{ "r" }; // mieux pour performance
 }
 
