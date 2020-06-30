@@ -27,8 +27,19 @@ const int* max_element(const int* begin, const int* end) {
 	}
 	return itor;
 }
+using func = int(*)(int, int);
+int add(int a, int b) { return a + b; }
+int sub(int a, int b) { return a - b; }
+void doIt(func f, int a, int b) {
+	cout << f(a, b) << endl;
+}
 int main()
 {
+	func a{ add };
+	func s{ sub };
+	doIt(add, 3, 7);
+	doIt(sub, 3, 7);
+
 	int tab[]{ 12, 3, 78, -12, 3, -2, 3 };
 	sort(begin(tab), end(tab));
 	display(begin(tab), end(tab));
@@ -42,7 +53,8 @@ int main()
 	iota(begin(tabio), end(tabio), 87);
 	cout << "iter:" << *iterator << "\n";
 	display(begin(tabio), end(tabio));
-
+	for (int n : tabio) {} // pas de modif des elements
+	for (int& n : tabio) {} // modif des elements
 
 
 	return 0;
