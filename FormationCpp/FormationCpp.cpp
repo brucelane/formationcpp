@@ -56,6 +56,7 @@ int somme(initializer_list<int> liste) {
 	for (int n : liste) {
 		resultat += n;
 	}
+	cout << "Taille " << liste.size() << endl;
 	return resultat;
 }
 
