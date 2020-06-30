@@ -7,10 +7,14 @@ using Vitesse = int;
 using Acceleration = Vitesse;
 using Deceleration = Vitesse;
 // Ctrl+D Dupliquer la selection
+enum class Couleur { ROUGE, VERT, POURPRE };
+enum class Cylindree {CC_200, CC_250, CC_500, CC_2000, CC_4200};
 class Voiture {
-	const Vitesse VITESSE_MAXIMUM = 129;
 private:
-	Vitesse vitesse{0};
+	Couleur couleur;
+	const Cylindree cylindree;
+	const Vitesse VITESSE_MAXIMUM = 129;
+	Vitesse vitesse{ 0 };
 	void SetVitesse(Vitesse vitesse) {
 		if (vitesse < VITESSE_MAXIMUM) {
 			this->vitesse = vitesse;
@@ -19,6 +23,12 @@ private:
 	}
 
 public:
+	Voiture(Couleur couleur, Cylindree cylindree) :
+		couleur { couleur },
+		cylindree{ cylindree }
+	{
+		
+	}
 	void demarrer(Vitesse vitesse) {
 		this->SetVitesse(vitesse);
 
@@ -30,13 +40,13 @@ public:
 		this->SetVitesse(vitesse + deceleration);
 	}
 	void stopper() {
-		this->SetVitesse(0);	
+		this->SetVitesse(0);
 	}
 };
 
 int main()
 {
-	Voiture v1;
+	Voiture v1{ Couleur::ROUGE, Cylindree::CC_2000 };
 	v1.demarrer(Vitesse{ 30 });
 	v1.accelerer(Acceleration{ 15 });
 	v1.ralentir(Deceleration{ 30 });
