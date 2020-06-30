@@ -36,14 +36,36 @@ void doIt(func f, int a, int b) {
 void doThis(int(*f)(int, int), int a, int b) {
 	cout << f(a, b) << endl;
 }
+using Pred = bool(*)(int);
+unsigned count_if(const int* begin, const int* end, Pred pred) {
+	unsigned compteur{};
+	while(begin != end) {
+		if (pred(*begin)) {
+			++compteur;
+		}
+		++begin;
+	}
+	return compteur;
+}
+bool isNegatif(int n) { return n < 0; }
+bool isPositif(int n) { return n >= 0; }
+
+
 int main()
 {
-	//inutile func a{ add };
-	//inutile func s{ sub };
-	doIt(add, 3, 7);
-	doIt(sub, 3, 7);
-
 	int tab[]{ 12, 3, 78, -12, 3, -2, 3 };
+	cout << count_if(cbegin(tab), cend(tab), isNegatif) << endl;
+	cout << count_if(cbegin(tab), cend(tab), isPositif) << endl;
+	// lambda
+	cout << 
+		count_if(
+			cbegin(tab), 
+			cend(tab), 
+			[](int n) {return n >= 0;}
+		) << endl;
+	// begin lecture seule cbegin écriture
+	cout << *find_if(cbegin(tab), cend(tab), [](int n) {return n < 0; }) << endl;
+
 	sort(begin(tab), end(tab));
 	display(begin(tab), end(tab));
 	const int* iterator{ max_element(begin(tab), end(tab)) };
@@ -59,6 +81,9 @@ int main()
 	for (int n : tabio) {} // pas de modif des elements
 	for (int& n : tabio) {} // modif des elements
 
-
+//inutile func a{ add };
+	//inutile func s{ sub };
+	doIt(add, 3, 7);
+	doIt(sub, 3, 7);
 	return 0;
 }
