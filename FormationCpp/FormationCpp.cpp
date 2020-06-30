@@ -4,6 +4,7 @@
 #include <iostream>
 #include <algorithm>
 #include <numeric>
+#include <cmath>
 #include <string>
 #include <map>
 #include <array>
@@ -50,10 +51,24 @@ unsigned count_if(const int* begin, const int* end, Pred pred) {
 bool isNegatif(int n) { return n < 0; }
 bool isPositif(int n) { return n >= 0; }
 
+int somme(initializer_list<int> liste) {
+	int resultat{};
+	for (int n : liste) {
+		resultat += n;
+	}
+	return resultat;
+}
 
 int main()
 {
-	int tab[]{ 12, 3, 78, -12, 3, -2, 3 };
+	cout << somme({ 12, 78 }) << endl;
+	cout << somme({ 12, 78, 890 }) << endl;
+
+	//int tab[]{ 12, 3, 78, -12, 3, -2, 3 };
+	int tab[10];
+	//generate(begin(tab), end(tab), rand);
+	generate(begin(tab), end(tab), [] {return (rand() % 10) - 5; });
+	cout << all_of(cbegin(tab), cend(tab), [](int n) {return n > 0; }) << endl;
 	cout << count_if(cbegin(tab), cend(tab), isNegatif) << endl;
 	cout << count_if(cbegin(tab), cend(tab), isPositif) << endl;
 	// lambda
