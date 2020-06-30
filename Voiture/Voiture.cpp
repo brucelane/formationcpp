@@ -16,13 +16,15 @@ public:
 	Moteur(Cylindree cylindree) :
 		cylindree{ cylindree }
 	{
+		cout << "Constructeur Moteur" << endl;
 	}
+	~Moteur() { cout << "Destructeur Moteur" << endl; }
 };
 
 class Voiture {
 private:
-	Couleur couleur;
-	Moteur moteur;
+	const Couleur couleur;
+	const Moteur moteur;
 	const Vitesse VITESSE_MAXIMUM = 129;
 	Vitesse vitesse{ 0 };
 	void SetVitesse(Vitesse vitesse) {
@@ -37,6 +39,7 @@ public:
 		couleur{ couleur },
 		moteur(cylindree)
 	{
+		cout << "Constructeur Voiture" << endl;
 	}
 	void demarrer(Vitesse vitesse) {
 		this->SetVitesse(vitesse);
@@ -51,18 +54,22 @@ public:
 	void stopper() {
 		this->SetVitesse(0);
 	}
+	~Voiture() { cout << "Destructeur Voiture" << endl; }
 };
 
 int main()
 {
-	Voiture v1{ Couleur::ROUGE, Cylindree::CC_2000 };
-	v1.demarrer(Vitesse{ 30 });
-	v1.accelerer(Acceleration{ 15 });
-	v1.ralentir(Deceleration{ 30 });
-	v1.stopper();
+	{
+		Voiture v1{ Couleur::ROUGE, Cylindree::CC_2000 };
+		v1.demarrer(Vitesse{ 30 });
+		v1.accelerer(Acceleration{ 15 });
+		v1.ralentir(Deceleration{ 30 });
+		v1.stopper();
 
-	string s; // creation objet
-	s = "t"; // puis init
-	string s2{ "r" }; // mieux pour performance
+		string s; // creation objet
+		s = "t"; // puis init
+		string s2{ "r" }; // mieux pour performance
+	}
+	cout << "Fin " << endl;
 }
 
