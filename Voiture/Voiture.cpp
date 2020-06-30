@@ -6,7 +6,7 @@ using namespace std;
 using Vitesse = int;
 using Acceleration = Vitesse;
 using Deceleration = Vitesse;
-
+// Ctrl+D Dupliquer la selection
 class Voiture {
 	const Vitesse VITESSE_MAXIMUM = 129;
 private:
