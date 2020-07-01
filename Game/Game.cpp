@@ -33,7 +33,7 @@ public:
 	void display() const {
 		//enlever cette dépendance cout << "[" << d1.getFaceValue() << "," << d2.getFaceValue() << "]"  << endl;
 		cout << "[ ";
-		dice1.display();
+		dice1.getFaceValue();
 		cout << " ";
 		dice2.display();
 		cout << " ]" << endl;
@@ -53,11 +53,11 @@ public:
 	//void setScore(Score score) { this->score += score; }
 	Score getScore() const { return this->score; }
 	Name getName() const { return this->name; }
-	void takeTurn(Cup cup) {
+	void takeTurn(Cup& cup) {
 		cup.roll();
 		Value value{ cup.getValue() };
 		this->score += value;
-		cout << cup.getValue() << " points pour" << this->name << endl;
+		cout << cup.getValue() << " points pour " << this->name << endl;
 		//this->setScore(cup.getValue());
 	};
 };
@@ -68,7 +68,13 @@ private:
 	Player player1;
 	Player player2;
 	Cup cup;
+	void displayWinner() const {
+		const Player& winner{
+			player1.getScore() > player2.getScore() ? player1 : player2
+		};
+		cout << "Gagnant: " << winner.getName() << " " << winner.getScore() << endl;
 
+	};
 public:
 	Game(const Name& name1, const Name& name2) :
 		player1{ name1 },
@@ -84,14 +90,8 @@ public:
 			cout << "Tour " << turn << endl;
 			player1.takeTurn(cup);
 			player2.takeTurn(cup);
-
-			//cout << "Gagnant tour " << turn << ": " << ((player1.getScore() > player2.getScore()) ? player1.GetName() : player2.GetName()) << endl;
 		}
-		const Player& winner{
-			player1.getScore() > player2.getScore() ? player1 : player2
-		};
-		cout << "Gagnant: " << winner.getName() <<" " << winner.getScore() << endl;
-			//cout << "Gagnant: " << ((player1.getScore() > player2.getScore()) ? player1.GetName() : player2.GetName()) << endl;
+		displayWinner();
 	};
 };
 int main()
@@ -101,9 +101,5 @@ int main()
 	game.setup(nbTurns);
 	game.start();
 	cout << "fin";
-	/*Cup cup;
-	cup.roll();
-	cup.display();
-	cout << cup.getValue() << " points" << endl;
-	*/
+
 }
