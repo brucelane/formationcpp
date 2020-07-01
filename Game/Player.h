@@ -1,5 +1,6 @@
 #pragma once
 #include "Cup.h"
+namespace Agaz {
 class Player {
 private:
 	const Name name;
@@ -9,10 +10,6 @@ public:
 	}
 	Score getScore() const { return this->score; }
 	Name getName() const { return this->name; }
-	void takeTurn(Cup& cup) {
-		cup.roll();
-		Value value{ cup.getValue() };
-		this->score += value;
-		cout << cup.getValue() << " points pour " << this->name << endl;
-	};
+	void takeTurn(Cup& cup);
 };
+}

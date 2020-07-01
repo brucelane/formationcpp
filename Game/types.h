@@ -4,13 +4,13 @@
 #include <ctime>
 #include <string>
 
+using std::string; // only needed
+using std::cout;
 
-using namespace std;
-
-
-using Value = unsigned;
-using FaceValue = Value;
-using Score = unsigned;
-using Name = string;
-
-using Turns = unsigned;
+namespace Agaz {
+	using Value = unsigned;
+	using FaceValue = Value;
+	using Score = unsigned;
+	using Name = string;
+	using Turns = unsigned;
+}

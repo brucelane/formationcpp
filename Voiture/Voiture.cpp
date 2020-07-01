@@ -23,12 +23,14 @@ public:
 
 class Voiture {
 private:
+	static inline Vitesse vitesseMax{ 129 };
+		
 	const Couleur couleur;
 	const Moteur moteur;
-	const Vitesse VITESSE_MAXIMUM = 129;
+	//const Vitesse VITESSE_MAXIMUM =
 	Vitesse vitesse{ 0 };
 	void SetVitesse(Vitesse vitesse) {
-		if (vitesse < VITESSE_MAXIMUM) {
+		if (vitesse < getVitesseMax()) {
 			this->vitesse = vitesse;
 			cout << "Vitesse: " << vitesse << endl;
 		}
@@ -40,6 +42,9 @@ public:
 		moteur(cylindree)
 	{
 		cout << "Constructeur Voiture" << endl;
+	}
+	static Vitesse getVitesseMax() {
+		return vitesseMax;
 	}
 	void demarrer(Vitesse vitesse) {
 		this->SetVitesse(vitesse);
@@ -70,6 +75,6 @@ int main()
 		s = "t"; // puis init
 		string s2{ "r" }; // mieux pour performance
 	}
-	cout << "Fin " << endl;
+	cout << Voiture::getVitesseMax() << endl;
 }
 
