@@ -112,15 +112,25 @@ public:
 
 int main()
 {
-	//int tab[3]; nope
-	array<int, 3> myArray; //classe
+	//int tab[3];tab[3]=12 pas d'exception ça plante... ne plus utiliser  les tableaux []
+
+	try
+	{
+		array<int, 3> tab; //classe
+		tab.at(3) = 12;
+	}
+	catch (const std::exception& e)
+	{
+		cout << e.what() << endl;
+	}
+
 
 	deque<int> c(23, 789); //val 1,2,3 (23, 789) taille, val 1
 	cout << c.size() << " c " << c[0] << endl;
 	deque<int> collection{ 23, 789 }; //val 1,2,3 (23, 789) taille, val 1
 	cout << collection.size() << " c " << collection[0] << endl;
 
-	list<int> l{26, 76};
+	list<int> l{ 26, 76 };
 	vector<int> vec{ cbegin(l),cend(l) };
 	vector<int>::iterator itor{ begin(vec) };
 	cout << *itor << endl;
@@ -164,7 +174,7 @@ int main()
 	cout << "1" << endl;
 	shared_ptr<A> up2{ up };
 	cout << "2" << endl;
-	
+
 
 
 	A* pA{ new A[1] };
