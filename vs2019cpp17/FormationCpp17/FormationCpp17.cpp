@@ -20,10 +20,7 @@ public:
 	}
 	~Moteur() { cout << "Destructeur Moteur" << endl; }
 };
-double mySqrt(double d) {
-	if (d <= 0) throw exception{ "Valeur non positive" };
-	return sqrt(d);
-}
+
 
 class Voiture {
 private:
@@ -65,7 +62,10 @@ public:
 	}
 	~Voiture() { cout << "Destructeur Voiture" << endl; }
 };
-
+double mySqrt(double d) /*noexcept(true)*/ {
+	if (d <= 0) throw exception{ "Valeur non positive" };
+	return sqrt(d);
+}
 int main()
 {
 	for (int n{ 0 };n < 3; ++n)
