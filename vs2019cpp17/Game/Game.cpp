@@ -8,8 +8,9 @@ void Game::start() noexcept
 	for (unsigned turn{ 1 }; turn < this->nbTurns; ++turn)
 	{
 		cout << "Tour " << turn << endl;
-		for (Player& player : players) { // ne pas oublier & pour ne pas faire de copie
-			player.takeTurn(cup);
+		// protégé par Player(const Player&) = delete; 
+		for (Player& player : players) { // ne pas oublier & pour ne pas faire de copie, avec la protection pas possible de l'enlever
+			player.takeTurn(cup); // le score de la copie disparaitrait!
 		}
 	}
 	displayWinner();

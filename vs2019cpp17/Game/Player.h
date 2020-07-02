@@ -2,17 +2,19 @@
 #include "Cup.h"
 
 namespace Agaz {
-class Player {
-private:
-	const Name name;
-	Score score{ 0 };
-public:
-	Player(Name name) : name{ name } {
-		if (name.empty())
-			throw exception{ "empty name" };
-	}
-	Score getScore() const noexcept { return this->score; }
-	Name getName() const noexcept { return this->name; }
-	void takeTurn(Cup& cup) noexcept;
-};
+	class Player {
+	private:
+		const Name name;
+		Score score{ 0 };
+	public:
+		// ne pas autoriser la copie
+		Player(const Player&) = delete; // A mettre partout, tout le temps
+		Player(const Name name) : name{ name } {
+			if (name.empty())
+				throw exception{ "empty name" };
+		}
+		Score getScore() const noexcept { return this->score; }
+		Name getName() const noexcept { return this->name; }
+		void takeTurn(Cup& cup) noexcept;
+	};
 }
