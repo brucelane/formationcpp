@@ -70,47 +70,65 @@ class A {
 public:
 	A() { cout << "ctor" << endl; }
 	~A() { cout << "dtor" << endl; }
-	void doIt() const { cout << "doit" << endl; }
+	void doIt() const { cout << "doit\n" << endl; }
 };
 void f(const A& a) {
 	a.doIt();
 }
 // global data segment
 A globalA;
-
+void exec(A* pA) {
+	//delete pA;
+}
 int main()
 {
+	A* a{ new A[3] };
+	delete [] a;
+/*
+	A* a{ new A{} }; // c++ c os gest mémoire, couteux 
+	a->doIt();
+	exec(a);
+
+	A* a2{ a }; // ptr sur même objet sur le tas(heap)
+	cout << a << " a a2 " << a2 << endl;
+	
+
+	A aa;
+	A* pAA{ &aa };
+	cout << "0" << endl;
 	cout << "1" << endl;
-	A{}.doIt();
+	A{}.doIt(); // sur la pile, anonyme
 	cout << "2" << endl;
 	f(A{});
 	cout << "3" << endl;
-	for (int n{ 0 };n < 3; ++n)
+	for (int n{ 0 }; n < 3; ++n)
 	{
 		double d;
 		cout << "nombre?" << endl;
-			cin >> d;
-			try
-			{
-				cout << mySqrt(d) << endl;
-			}
-			catch (const std::exception& e)
-			{
-				cout << e.what() << endl;
-			}
+		cin >> d;
+		try
+		{
+			cout << mySqrt(d) << endl;
+		}
+		catch (const std::exception& e)
+		{
+			cout << e.what() << endl;
+		}
 	}
-	
-	
-		Voiture v1{ Couleur::ROUGE, Cylindree::CC_2000 };
-		v1.demarrer(Vitesse{ 30 });
-		v1.accelerer(Acceleration{ 15 });
-		v1.ralentir(Deceleration{ 30 });
-		v1.stopper();
 
-		string s; // creation objet
-		s = "t"; // puis init
-		string s2{ "r" }; // mieux pour performance
+
+	Voiture v1{ Couleur::ROUGE, Cylindree::CC_2000 };
+	v1.demarrer(Vitesse{ 30 });
+	v1.accelerer(Acceleration{ 15 });
+	v1.ralentir(Deceleration{ 30 });
+	v1.stopper();
+
+	string s; // creation objet
+	s = "t"; // puis init
+	string s2{ "r" }; // mieux pour performance
 	
-	cout << Voiture::getVitesseMax() << endl;
+	cout << Voiture::getVitesseMax() << endl;*/
+	// meme ptr! ne pas faire delete a2;
+	
 }
 
