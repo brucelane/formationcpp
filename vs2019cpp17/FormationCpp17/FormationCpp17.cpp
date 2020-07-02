@@ -131,21 +131,32 @@ public:
 	}
 	Point operator - (const Point& other) const {
 		return Point{ this->x - other.x,this->y - other.y };
+	}	
+	Point operator -= (const Point& other)  {
+		this->x -= other.x;
+		this->y -= other.y;
+		return *this;
 	}
-	Point operator * (int other) const {
-		return Point{ this->x * other,this->y * other };
+	Point operator * (int n) const {
+		return Point{ this->x * n,this->y * n };
+	}
+	Point operator *= (int n) {
+		this->x -= n;
+		this->y -= n;
+		return *this;
 	}
 };
 int main()
 {
-	Point p1{ 2, -6 };
-	Point p2{ 6, -1 };
+	Point p1{ 2, 3 };
+	Point p2{ 4, 5 };
 	Point p3{ p1 + p2 };
-	Point p5{ p1 * 3 };
 	Point p4{ p1 - p2 };
-
-	//int tab[3];tab[3]=12 pas d'exception ça plante... ne plus utiliser  les tableaux []
-
+	Point p5{ p1 * 3 };
+	p5 -= p2;
+	p2 *= 5;
+	int tab[3];//tab[3]=12 pas d'exception ça plante... ne plus utiliser  les tableaux []
+	cout << "fin" << endl;
 /*	try
 	{
 		array<int, 3> tab; //classe
