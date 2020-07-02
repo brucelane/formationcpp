@@ -6,10 +6,17 @@ using namespace Agaz;
 
 int main()
 {
-	Game game{ "Sitting Bull" , "Geronimo" };
-	Turns nbTurns{ 6 };
-	game.setup(nbTurns);
-	game.start();
+	try
+	{
+		Game game{ "Sitting Bull" , "Geronimo" };
+		Turns nbTurns{ 2 };
+		game.setup(nbTurns);
+		game.start();
+	}
+	catch (const std::exception& e)
+	{
+		cout << "Erreur" << e.what() << endl;
+	}
 	cout << "fin";
 
 }

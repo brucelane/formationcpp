@@ -23,7 +23,7 @@ public:
 
 class Voiture {
 private:
-	static inline Vitesse vitesseMax{ 129 };
+	static Vitesse vitesseMax{ 129 };
 		
 	const Couleur couleur;
 	const Moteur moteur;
@@ -61,7 +61,7 @@ public:
 	}
 	~Voiture() { cout << "Destructeur Voiture" << endl; }
 };
-
+//Voiture::vitesseMax{ 129 };
 int main()
 {
 	{

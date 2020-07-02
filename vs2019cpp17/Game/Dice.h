@@ -2,19 +2,25 @@
 #include "types.h"
 
 namespace Agaz {
+
+	
+
+
+
 	class Dice {
 		FaceValue faceValue;
 	public:
 		Dice() {
-			srand((unsigned)time(0));
+
 			roll();
 		}
-		void roll() {
+		void roll() noexcept {
+			static Random random;
 			const FaceValue MIN_VALUE{ 1 };
 			const FaceValue MAX_VALUE{ 6 };
-			faceValue = MIN_VALUE + (rand() % MAX_VALUE);
+			faceValue = random.nextValue(MIN_VALUE, MAX_VALUE);
 		}
-		void display() const { cout << faceValue; }
-		FaceValue getFaceValue() const { return faceValue; }
+		void display() const noexcept { cout << faceValue; }
+		FaceValue getFaceValue() const noexcept { return faceValue; }
 	};
 }

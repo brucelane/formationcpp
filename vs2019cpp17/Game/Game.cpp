@@ -1,6 +1,7 @@
 #include "Game.h"
 
-void Agaz::Game::start()
+
+void Agaz::Game::start() noexcept
 {
 
 	for (unsigned turn{ 1 }; turn < this->nbTurns; ++turn)

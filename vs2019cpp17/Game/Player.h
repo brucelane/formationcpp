@@ -1,5 +1,6 @@
 #pragma once
 #include "Cup.h"
+
 namespace Agaz {
 class Player {
 private:
@@ -7,9 +8,11 @@ private:
 	Score score{ 0 };
 public:
 	Player(Name name) : name{ name } {
+		if (name.empty())
+			throw exception{ "empty name" };
 	}
-	Score getScore() const { return this->score; }
-	Name getName() const { return this->name; }
-	void takeTurn(Cup& cup);
+	Score getScore() const noexcept { return this->score; }
+	Name getName() const noexcept { return this->name; }
+	void takeTurn(Cup& cup) noexcept;
 };
 }

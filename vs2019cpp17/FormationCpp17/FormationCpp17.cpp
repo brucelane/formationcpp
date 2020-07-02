@@ -66,8 +66,25 @@ double mySqrt(double d) /*noexcept(true)*/ {
 	if (d <= 0) throw exception{ "Valeur non positive" };
 	return sqrt(d);
 }
+class A {
+public:
+	A() { cout << "ctor" << endl; }
+	~A() { cout << "dtor" << endl; }
+	void doIt() const { cout << "doit" << endl; }
+};
+void f(const A& a) {
+	a.doIt();
+}
+// global data segment
+A globalA;
+
 int main()
 {
+	cout << "1" << endl;
+	A{}.doIt();
+	cout << "2" << endl;
+	f(A{});
+	cout << "3" << endl;
 	for (int n{ 0 };n < 3; ++n)
 	{
 		double d;
