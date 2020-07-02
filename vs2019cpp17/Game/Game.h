@@ -10,6 +10,7 @@ namespace Agaz {
 		Cup cup;
 		void displayWinner() const noexcept;
 	public:
+		Game(unsigned nbDices) : cup{ nbDices } {};
 		void enroll(const Name& name) {
 			players.emplace_back( name );
 		};

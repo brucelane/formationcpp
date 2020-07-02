@@ -9,14 +9,14 @@ int main()
 	// choix nb dés puis fixe (frozen uml)
 	try
 	{
-		//Game game{ "Sitting Bull" , "Geronimo" };
-		Game game;
+		
+		unsigned nbDices{ 5 }; //verif 0 pas possible
+		Game game{nbDices};
 		game.enroll("Geronimo");
 		game.enroll("Sitting Bull");
 		game.enroll("Red Hat");
 		Turns nbTurns{ 2 };
-		Turns nbDices{ 3 };
-		game.setup(nbTurns/*, nbDices*/);
+		game.setup(nbTurns);
 		game.start();
 	}
 	catch (const std::exception& e)

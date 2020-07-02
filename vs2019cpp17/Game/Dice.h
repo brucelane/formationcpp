@@ -24,6 +24,7 @@ namespace Agaz {
 	class Dice {
 		FaceValue faceValue;
 	public:
+		Dice(Dice& dice) = delete;
 		Dice() {
 
 			roll();

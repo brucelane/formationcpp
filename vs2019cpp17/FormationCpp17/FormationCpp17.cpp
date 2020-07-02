@@ -23,6 +23,8 @@ public:
 	{
 		cout << "Constructeur Moteur" << endl;
 	}
+	void Reparer() {} // v.GetMoteur().Reparer non!
+	void Casser() {} 
 	~Moteur() { cout << "Destructeur Moteur" << endl; }
 };
 class Clim {
@@ -74,7 +76,17 @@ public:
 		delete pClim;
 		cout << "Destructeur Voiture" << endl;
 	}
+	void Reparer() { /*moteur.Reparer();*/ }
+	friend class Garagiste;
 };
+class Garagiste {
+public:
+	void reparer(Voiture& v) {
+		v.Reparer();
+	}
+};
+
+
 double mySqrt(double d) /*noexcept(true)*/ {
 	if (d <= 0) throw exception{ "Valeur non positive" };
 	return sqrt(d);
@@ -109,12 +121,32 @@ public:
 	~Conteneur() { cout << "dtor Conteneur" << endl; }
 
 };
-
+class Point {
+	int x;
+	int y;
+public:
+	Point(int x, int y) : x{x}, y{y} {}
+	Point operator + (const Point& other) const {
+		return Point{ this->x + other.x,this->y + other.y };
+	}
+	Point operator - (const Point& other) const {
+		return Point{ this->x - other.x,this->y - other.y };
+	}
+	Point operator * (int other) const {
+		return Point{ this->x * other,this->y * other };
+	}
+};
 int main()
 {
+	Point p1{ 2, -6 };
+	Point p2{ 6, -1 };
+	Point p3{ p1 + p2 };
+	Point p5{ p1 * 3 };
+	Point p4{ p1 - p2 };
+
 	//int tab[3];tab[3]=12 pas d'exception ça plante... ne plus utiliser  les tableaux []
 
-	try
+/*	try
 	{
 		array<int, 3> tab; //classe
 		tab.at(3) = 12;
@@ -141,7 +173,7 @@ int main()
 	//v.push_back(A{123}); non car ctor par copie
 	v.emplace_back(123, 56.32); //economique
 
-/*	vector<int> v;
+	vector<int> v;
 	for (int i{ 0 }; i < 16; ++i) {
 		v.push_back(i);
 		cout << v.size() << " c " << v.capacity() << endl;
