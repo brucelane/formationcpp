@@ -2,6 +2,10 @@
 #include <iostream>
 #include <memory>
 #include <vector>
+#include <deque>
+#include <list>
+#include <array>
+
 using namespace std;
 
 using Vitesse = int;
@@ -78,6 +82,9 @@ double mySqrt(double d) /*noexcept(true)*/ {
 class A {
 public:
 	A() { cout << "ctor A" << endl; }
+	A(int n) { cout << "ctor 1" << endl; }
+	A(int n, double d) { cout << "ctor 1" << endl; }
+	A(const initializer_list<int>& liste) { cout << "ctor 2" << endl; }
 	~A() { cout << "dtor A" << endl; }
 	void doIt() const { cout << "doit A\n" << endl; }
 };
@@ -105,7 +112,32 @@ public:
 
 int main()
 {
-	vector<int> v;
+	//int tab[3]; nope
+	array<int, 3> myArray; //classe
+
+	deque<int> c(23, 789); //val 1,2,3 (23, 789) taille, val 1
+	cout << c.size() << " c " << c[0] << endl;
+	deque<int> collection{ 23, 789 }; //val 1,2,3 (23, 789) taille, val 1
+	cout << collection.size() << " c " << collection[0] << endl;
+
+	list<int> l{26, 76};
+	vector<int> vec{ cbegin(l),cend(l) };
+	vector<int>::iterator itor{ begin(vec) };
+	cout << *itor << endl;
+	++itor;
+	cout << *itor << endl;
+
+	vector<A> v;
+	//v.push_back(A{123}); non car ctor par copie
+	v.emplace_back(123, 56.32); //economique
+
+/*	vector<int> v;
+	for (int i{ 0 }; i < 16; ++i) {
+		v.push_back(i);
+		cout << v.size() << " c " << v.capacity() << endl;
+	}
+
+
 	v.reserve(100);
 	v.size();
 	v.push_back(v.size());
@@ -113,8 +145,14 @@ int main()
 	v.push_back(v.size());
 	v.push_back(v.capacity());
 
-	for (int n : v) cout << n << endl;
+	for (int n : v) cout << n ;
 
+	cout << "A a1(12) "  << endl;
+	A a1(12);
+	cout << "A a2{ 21 } " << endl;
+	A a2{ 21 };
+	cout << "string(60, 61) " << string(60, 61) << endl;
+	cout << "string{ 60, 61 } "  << string{ 60, 61 } << endl;
 	Conteneur c{ true };
 	unique_ptr<Conteneur> cnt{ new Conteneur(true) };
 
@@ -126,7 +164,7 @@ int main()
 	cout << "1" << endl;
 	shared_ptr<A> up2{ up };
 	cout << "2" << endl;
-	/*
+	
 
 
 	A* pA{ new A[1] };
