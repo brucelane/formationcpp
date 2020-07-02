@@ -1,6 +1,7 @@
 
 #include <iostream>
-
+#include <memory>
+#include <vector>
 using namespace std;
 
 using Vitesse = int;
@@ -20,7 +21,11 @@ public:
 	}
 	~Moteur() { cout << "Destructeur Moteur" << endl; }
 };
-
+class Clim {
+private:
+public:
+	Clim() {};
+};
 
 class Voiture {
 private:
@@ -36,11 +41,12 @@ private:
 			cout << "Vitesse: " << vitesse << endl;
 		}
 	}
-
+	Clim* pClim;
 public:
-	Voiture(Couleur couleur, Cylindree cylindree) :
+	Voiture(Couleur couleur, Cylindree cylindree, bool presenceClim) :
 		couleur{ couleur },
-		moteur(cylindree)
+		moteur(cylindree),
+		pClim{ presenceClim ? new Clim : nullptr }
 	{
 		cout << "Constructeur Voiture" << endl;
 	}
@@ -60,7 +66,10 @@ public:
 	void stopper() {
 		this->SetVitesse(0);
 	}
-	~Voiture() { cout << "Destructeur Voiture" << endl; }
+	~Voiture() {
+		delete pClim;
+		cout << "Destructeur Voiture" << endl;
+	}
 };
 double mySqrt(double d) /*noexcept(true)*/ {
 	if (d <= 0) throw exception{ "Valeur non positive" };
@@ -68,67 +77,111 @@ double mySqrt(double d) /*noexcept(true)*/ {
 }
 class A {
 public:
-	A() { cout << "ctor" << endl; }
-	~A() { cout << "dtor" << endl; }
-	void doIt() const { cout << "doit\n" << endl; }
+	A() { cout << "ctor A" << endl; }
+	~A() { cout << "dtor A" << endl; }
+	void doIt() const { cout << "doit A\n" << endl; }
 };
 void f(const A& a) {
 	a.doIt();
 }
 // global data segment
 A globalA;
-void exec(A* pA) {
-	//delete pA;
-}
+
+class Conteneur {
+	//A* a = nullptr;
+	unique_ptr<A> a;
+public:
+	Conteneur(bool presenceA) {
+		//if (presenceA) a = new A;
+		if (presenceA) a.reset(new A);
+		cout << "ctor Conteneur" << endl;
+	}
+	void start() const {
+		if (a != nullptr) a->doIt();
+	}
+	~Conteneur() { cout << "dtor Conteneur" << endl; }
+
+};
+
 int main()
 {
-	A* a{ new A[3] };
-	delete [] a;
-/*
-	A* a{ new A{} }; // c++ c os gest mémoire, couteux 
-	a->doIt();
-	exec(a);
+	vector<int> v;
+	v.reserve(100);
+	v.size();
+	v.push_back(v.size());
+	v.push_back(123);
+	v.push_back(v.size());
+	v.push_back(v.capacity());
 
-	A* a2{ a }; // ptr sur même objet sur le tas(heap)
-	cout << a << " a a2 " << a2 << endl;
-	
+	for (int n : v) cout << n << endl;
 
-	A aa;
-	A* pAA{ &aa };
-	cout << "0" << endl;
-	cout << "1" << endl;
-	A{}.doIt(); // sur la pile, anonyme
-	cout << "2" << endl;
-	f(A{});
-	cout << "3" << endl;
-	for (int n{ 0 }; n < 3; ++n)
+	Conteneur c{ true };
+	unique_ptr<Conteneur> cnt{ new Conteneur(true) };
+
+	shared_ptr<A> up{ new A }; // weak-ptr ptr sur qq chose qui n'existe pitet plus ?
 	{
-		double d;
-		cout << "nombre?" << endl;
-		cin >> d;
-		try
-		{
-			cout << mySqrt(d) << endl;
-		}
-		catch (const std::exception& e)
-		{
-			cout << e.what() << endl;
-		}
+		shared_ptr<A> up1{ up };
+		cout << "0" << endl;
 	}
+	cout << "1" << endl;
+	shared_ptr<A> up2{ up };
+	cout << "2" << endl;
+	/*
 
 
-	Voiture v1{ Couleur::ROUGE, Cylindree::CC_2000 };
-	v1.demarrer(Vitesse{ 30 });
-	v1.accelerer(Acceleration{ 15 });
-	v1.ralentir(Deceleration{ 30 });
-	v1.stopper();
+	A* pA{ new A[1] };
+		pA[0].doIt();
+		delete [] pA;
 
-	string s; // creation objet
-	s = "t"; // puis init
-	string s2{ "r" }; // mieux pour performance
-	
-	cout << Voiture::getVitesseMax() << endl;*/
-	// meme ptr! ne pas faire delete a2;
-	
+		{
+			A tab[1];
+			tab[0].doIt();
+		}
+
+		A* a{ new A{} }; // c++ c os gest mémoire, couteux
+		a->doIt();
+		exec(a);
+
+		A* a2{ a }; // ptr sur même objet sur le tas(heap)
+		cout << a << " a a2 " << a2 << endl;
+
+
+		A aa;
+		A* pAA{ &aa };
+		cout << "0" << endl;
+		cout << "1" << endl;
+		A{}.doIt(); // sur la pile, anonyme
+		cout << "2" << endl;
+		f(A{});
+		cout << "3" << endl;
+		for (int n{ 0 }; n < 3; ++n)
+		{
+			double d;
+			cout << "nombre?" << endl;
+			cin >> d;
+			try
+			{
+				cout << mySqrt(d) << endl;
+			}
+			catch (const std::exception& e)
+			{
+				cout << e.what() << endl;
+			}
+		}
+
+
+		Voiture v1{ Couleur::ROUGE, Cylindree::CC_2000 };
+		v1.demarrer(Vitesse{ 30 });
+		v1.accelerer(Acceleration{ 15 });
+		v1.ralentir(Deceleration{ 30 });
+		v1.stopper();
+
+		string s; // creation objet
+		s = "t"; // puis init
+		string s2{ "r" }; // mieux pour performance
+
+		cout << Voiture::getVitesseMax() << endl;*/
+		// meme ptr! ne pas faire delete a2;
+
 }
 

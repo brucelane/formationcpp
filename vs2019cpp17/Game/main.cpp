@@ -6,6 +6,7 @@ using namespace Agaz;
 
 int main()
 {
+	// choix nb dés puis fixe (frozen uml)
 	try
 	{
 		Game game{ "Sitting Bull" , "Geronimo" };
