@@ -21,20 +21,18 @@ namespace GameNS {
         dice.roll();
     }
 
-    void display() const noexcept {
-      cout << "[ ";
-      
-      for (const Dice& dice : dices)
-        cout << dice.getFaceValue() << " ";
-      
-      cout << "]";
-    }
-
     Value getValue() const noexcept {
       Value value{};
       for (const Dice& dice : dices)
         value += dice.getFaceValue();
       return value;
+    }
+
+    friend ostream& operator<< (ostream& o, const Cup& cup) {
+      o << "[ ";
+      for (const Dice& dice : cup.dices)
+        o << dice << " ";
+      return o << "]";
     }
   };
 }

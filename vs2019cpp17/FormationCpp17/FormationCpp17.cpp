@@ -26,7 +26,7 @@ public:
 		cout << "Constructeur Moteur" << endl;
 	}
 	void Reparer() {} // v.GetMoteur().Reparer non!
-	void Casser() {} 
+	void Casser() {}
 	~Moteur() { cout << "Destructeur Moteur" << endl; }
 };
 class Clim {
@@ -34,9 +34,10 @@ private:
 public:
 	Clim() {};
 };
-
+using Prix = double;
 class Voiture {
 private:
+	Prix prix;
 	static inline Vitesse vitesseMax{ 129 };
 
 	const Couleur couleur;
@@ -51,10 +52,11 @@ private:
 	}
 	Clim* pClim;
 public:
-	Voiture(Couleur couleur, Cylindree cylindree, bool presenceClim) :
+	Voiture(Couleur couleur, Cylindree cylindree, bool presenceClim, Prix prix) :
 		couleur{ couleur },
 		moteur(cylindree),
-		pClim{ presenceClim ? new Clim : nullptr }
+		pClim{ presenceClim ? new Clim : nullptr},
+		prix {prix} 
 	{
 		cout << "Constructeur Voiture" << endl;
 	}
@@ -80,6 +82,7 @@ public:
 	}
 	void Reparer() { /*moteur.Reparer();*/ }
 	friend class Garagiste;
+
 };
 class Garagiste {
 public:
@@ -127,7 +130,7 @@ class Point {
 	int x;
 	int y;
 public:
-	Point(int x, int y) : x{x}, y{y} {}
+	Point(int x, int y) : x{ x }, y{ y } {}
 	Point operator + (const Point& other) const {
 		return Point{ this->x + other.x,this->y + other.y };
 	}
@@ -135,8 +138,8 @@ public:
 		//Point copy{ *this }; copy -= other; return copy;
 		return Point{ *this } -= other; // copie utilise -= operateur
 		//return Point{ this->x - other.x,this->y - other.y };
-	}	
-	Point operator -= (const Point& other)  {
+	}
+	Point operator -= (const Point& other) {
 		this->x -= other.x;
 		this->y -= other.y;
 		return *this;
@@ -153,16 +156,21 @@ public:
 		return o << "(" << pt.x << ", " << pt.y << ")";
 	}
 };
-
+// utiliser set pour remplacer map dans vd? multiset si doublons
 int main()
 {
 	Point p1{ 2, 3 };
 	cout << "p:" << p1 << endl;
-	ofstream {"p.txt"} << p1 << "\n"; // fopen à bannir
+	ofstream{ "p.txt" } << p1 << "\n"; // fopen à bannir
 
 	ostringstream oss;
 	oss << p1 << "ok\n";
-	cout << oss.str() << endl;
+	cout << oss.str() << endl; // ou socket si besoin
+	// pas de try catch possible, trop ancien C
+	ifstream ifs{ "input.txt" };
+	if (!ifs.good()) {
+		cout << "inexistant" << endl;
+	}
 
 	Point p2{ 4, 5 };
 	Point p3{ p1 + p2 };
@@ -173,122 +181,122 @@ int main()
 	int tab[3];//tab[3]=12 pas d'exception ça plante... ne plus utiliser  les tableaux []
 	// lol p5.operator+(p2);
 	cout << "fin" << endl;
-/*	try
-	{
-		array<int, 3> tab; //classe
-		tab.at(3) = 12;
-	}
-	catch (const std::exception& e)
-	{
-		cout << e.what() << endl;
-	}
-
-
-	deque<int> c(23, 789); //val 1,2,3 (23, 789) taille, val 1
-	cout << c.size() << " c " << c[0] << endl;
-	deque<int> collection{ 23, 789 }; //val 1,2,3 (23, 789) taille, val 1
-	cout << collection.size() << " c " << collection[0] << endl;
-
-	list<int> l{ 26, 76 };
-	vector<int> vec{ cbegin(l),cend(l) };
-	vector<int>::iterator itor{ begin(vec) };
-	cout << *itor << endl;
-	++itor;
-	cout << *itor << endl;
-
-	vector<A> v;
-	//v.push_back(A{123}); non car ctor par copie
-	v.emplace_back(123, 56.32); //economique
-
-	vector<int> v;
-	for (int i{ 0 }; i < 16; ++i) {
-		v.push_back(i);
-		cout << v.size() << " c " << v.capacity() << endl;
-	}
-
-
-	v.reserve(100);
-	v.size();
-	v.push_back(v.size());
-	v.push_back(123);
-	v.push_back(v.size());
-	v.push_back(v.capacity());
-
-	for (int n : v) cout << n ;
-
-	cout << "A a1(12) "  << endl;
-	A a1(12);
-	cout << "A a2{ 21 } " << endl;
-	A a2{ 21 };
-	cout << "string(60, 61) " << string(60, 61) << endl;
-	cout << "string{ 60, 61 } "  << string{ 60, 61 } << endl;
-	Conteneur c{ true };
-	unique_ptr<Conteneur> cnt{ new Conteneur(true) };
-
-	shared_ptr<A> up{ new A }; // weak-ptr ptr sur qq chose qui n'existe pitet plus ?
-	{
-		shared_ptr<A> up1{ up };
-		cout << "0" << endl;
-	}
-	cout << "1" << endl;
-	shared_ptr<A> up2{ up };
-	cout << "2" << endl;
-
-
-
-	A* pA{ new A[1] };
-		pA[0].doIt();
-		delete [] pA;
-
+	/*	try
 		{
-			A tab[1];
-			tab[0].doIt();
+			array<int, 3> tab; //classe
+			tab.at(3) = 12;
+		}
+		catch (const std::exception& e)
+		{
+			cout << e.what() << endl;
 		}
 
-		A* a{ new A{} }; // c++ c os gest mémoire, couteux
-		a->doIt();
-		exec(a);
 
-		A* a2{ a }; // ptr sur même objet sur le tas(heap)
-		cout << a << " a a2 " << a2 << endl;
+		deque<int> c(23, 789); //val 1,2,3 (23, 789) taille, val 1
+		cout << c.size() << " c " << c[0] << endl;
+		deque<int> collection{ 23, 789 }; //val 1,2,3 (23, 789) taille, val 1
+		cout << collection.size() << " c " << collection[0] << endl;
+
+		list<int> l{ 26, 76 };
+		vector<int> vec{ cbegin(l),cend(l) };
+		vector<int>::iterator itor{ begin(vec) };
+		cout << *itor << endl;
+		++itor;
+		cout << *itor << endl;
+
+		vector<A> v;
+		//v.push_back(A{123}); non car ctor par copie
+		v.emplace_back(123, 56.32); //economique
+
+		vector<int> v;
+		for (int i{ 0 }; i < 16; ++i) {
+			v.push_back(i);
+			cout << v.size() << " c " << v.capacity() << endl;
+		}
 
 
-		A aa;
-		A* pAA{ &aa };
-		cout << "0" << endl;
+		v.reserve(100);
+		v.size();
+		v.push_back(v.size());
+		v.push_back(123);
+		v.push_back(v.size());
+		v.push_back(v.capacity());
+
+		for (int n : v) cout << n ;
+
+		cout << "A a1(12) "  << endl;
+		A a1(12);
+		cout << "A a2{ 21 } " << endl;
+		A a2{ 21 };
+		cout << "string(60, 61) " << string(60, 61) << endl;
+		cout << "string{ 60, 61 } "  << string{ 60, 61 } << endl;
+		Conteneur c{ true };
+		unique_ptr<Conteneur> cnt{ new Conteneur(true) };
+
+		shared_ptr<A> up{ new A }; // weak-ptr ptr sur qq chose qui n'existe pitet plus ?
+		{
+			shared_ptr<A> up1{ up };
+			cout << "0" << endl;
+		}
 		cout << "1" << endl;
-		A{}.doIt(); // sur la pile, anonyme
+		shared_ptr<A> up2{ up };
 		cout << "2" << endl;
-		f(A{});
-		cout << "3" << endl;
-		for (int n{ 0 }; n < 3; ++n)
-		{
-			double d;
-			cout << "nombre?" << endl;
-			cin >> d;
-			try
+
+
+
+		A* pA{ new A[1] };
+			pA[0].doIt();
+			delete [] pA;
+
 			{
-				cout << mySqrt(d) << endl;
+				A tab[1];
+				tab[0].doIt();
 			}
-			catch (const std::exception& e)
+
+			A* a{ new A{} }; // c++ c os gest mémoire, couteux
+			a->doIt();
+			exec(a);
+
+			A* a2{ a }; // ptr sur même objet sur le tas(heap)
+			cout << a << " a a2 " << a2 << endl;
+
+
+			A aa;
+			A* pAA{ &aa };
+			cout << "0" << endl;
+			cout << "1" << endl;
+			A{}.doIt(); // sur la pile, anonyme
+			cout << "2" << endl;
+			f(A{});
+			cout << "3" << endl;
+			for (int n{ 0 }; n < 3; ++n)
 			{
-				cout << e.what() << endl;
+				double d;
+				cout << "nombre?" << endl;
+				cin >> d;
+				try
+				{
+					cout << mySqrt(d) << endl;
+				}
+				catch (const std::exception& e)
+				{
+					cout << e.what() << endl;
+				}
 			}
-		}
 
 
-		Voiture v1{ Couleur::ROUGE, Cylindree::CC_2000 };
-		v1.demarrer(Vitesse{ 30 });
-		v1.accelerer(Acceleration{ 15 });
-		v1.ralentir(Deceleration{ 30 });
-		v1.stopper();
+			Voiture v1{ Couleur::ROUGE, Cylindree::CC_2000 };
+			v1.demarrer(Vitesse{ 30 });
+			v1.accelerer(Acceleration{ 15 });
+			v1.ralentir(Deceleration{ 30 });
+			v1.stopper();
 
-		string s; // creation objet
-		s = "t"; // puis init
-		string s2{ "r" }; // mieux pour performance
+			string s; // creation objet
+			s = "t"; // puis init
+			string s2{ "r" }; // mieux pour performance
 
-		cout << Voiture::getVitesseMax() << endl;*/
-		// meme ptr! ne pas faire delete a2;
+			cout << Voiture::getVitesseMax() << endl;*/
+			// meme ptr! ne pas faire delete a2;
 
 }
 

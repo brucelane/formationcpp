@@ -19,6 +19,9 @@ namespace GameNS {
 
     void takeTurn(Cup& cup) noexcept;
     Score getScore() const noexcept { return score; }
-    Name getName() const noexcept { return name; }
+
+    friend ostream& operator<< (ostream& o, const Player& player) {
+      return o << player.name;
+    }
   };
 }

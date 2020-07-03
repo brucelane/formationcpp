@@ -23,8 +23,12 @@ namespace GameNS {
       const FaceValue MAX_VALUE{ 6 };
       faceValue = random.nextValue(MIN_VALUE, MAX_VALUE);
     }
-    void display() const noexcept { cout << faceValue; }
+
     FaceValue getFaceValue() const noexcept { return faceValue; }
+
+    friend ostream& operator<< (ostream& o, const Dice& dice) {
+      return o << dice.faceValue;
+    }
   };
 
 }

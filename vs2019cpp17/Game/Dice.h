@@ -37,5 +37,8 @@ namespace Agaz {
 		}
 		void display() const noexcept { cout << faceValue; }
 		FaceValue getFaceValue() const noexcept { return faceValue; }
+		friend ostream& operator<< (ostream& o, const Dice& dice) {
+			return o << dice.faceValue;
+		}
 	};
 }

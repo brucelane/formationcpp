@@ -12,6 +12,7 @@ using std::endl;
 using std::exception;
 using std::list;
 using std::vector;
+using std::ostream;
 
 namespace GameNS {
 

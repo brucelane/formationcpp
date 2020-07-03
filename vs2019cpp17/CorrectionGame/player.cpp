@@ -5,7 +5,5 @@ void GameNS::Player::takeTurn(Cup& cup) noexcept
   cup.roll();
   Value value{ cup.getValue() };
   score += value;
-  cout << name << " got " << value << " points ";
-  cup.display();
-  cout << "\n";
+  cout << *this << " got " << value << " points " << cup << "\n";
 }

@@ -14,7 +14,15 @@ namespace Agaz {
 				throw exception{ "empty name" };
 		}
 		Score getScore() const noexcept { return this->score; }
-		Name getName() const noexcept { return this->name; }
+		//Name getName() const noexcept { return this->name; }
 		void takeTurn(Cup& cup) noexcept;
+
+		bool operator < (const Player& other) const {
+			return this->score < other.score;
+		}
+
+		friend ostream& operator << (ostream& o, const Player& player) {
+			return o << "(" << player.name << ")";
+		}
 	};
 }

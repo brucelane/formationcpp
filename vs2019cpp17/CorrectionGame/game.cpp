@@ -25,5 +25,5 @@ void Game::displayWinner() const noexcept {
       winner = &player;
   }
 
-  cout << "\n" << winner->getName() << " won with " << winner->getScore() << " points \n";
+  cout << "\n" << *winner << " won with " << winner->getScore() << " points \n";
 }

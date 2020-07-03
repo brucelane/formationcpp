@@ -1,5 +1,6 @@
 #include "Game.h"
 
+
 using namespace Agaz;
 
 void Game::start() noexcept
@@ -18,14 +19,14 @@ void Game::start() noexcept
 }
 void Game::displayWinner() const noexcept {
 	
-	const Player* winner{ &players.front() };
+	/*const Player* winner{ &players.front() };
 	// const pour protéger les players contre modifs
 	for (const Player& player : players) {
 		if (player.getScore() > winner->getScore()) {
 			winner = &player;
 		}
-	}
-	
-	cout << "Gagnant: " << winner->getName() << " " << winner->getScore() << endl;
+	}*/
+	const Player& winner{ *max_element(cbegin(players), cend(players)) };
+	cout << "Gagnant: " << winner << " " << winner.getScore() << endl;
 
 };

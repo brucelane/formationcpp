@@ -23,14 +23,14 @@ namespace Agaz {
 			}
 
 		}
-		void display() const noexcept {
+		/* << void display() const noexcept {
 			//enlever cette dépendance cout << "[" << d1.getFaceValue() << "," << d2.getFaceValue() << "]"  << endl;
 			cout << "[ ";
 			for (const Dice& dice : dices) {// ERR & obligatoire grace au delete du ctor de copie
 				cout << " " << dice.getFaceValue();
 			}
 			cout << " ]" << endl;
-		}
+		}*/
 		Value getValue() const noexcept {
 			Value value{ 0 };
 			for (const Dice& dice : dices) {// ERR
@@ -38,5 +38,12 @@ namespace Agaz {
 			}
 			return value;
 		}
+		friend ostream& operator<< (ostream& o, const Cup& cup) {
+			o << "[ ";
+			for (const Dice& dice : cup.dices)
+				o << dice << " ";
+			return o << "]";
+		}
+		
 	};
 }

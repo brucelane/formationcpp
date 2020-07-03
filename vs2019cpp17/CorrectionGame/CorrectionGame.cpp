@@ -5,7 +5,7 @@ using namespace GameNS;
 int main()
 {
     try {
-        unsigned nbDices{ 15 };
+        unsigned nbDices{ 5 };
         Game game{ nbDices };
         game.enrol("Geronimo");
         game.enrol("Sitting Bull");
