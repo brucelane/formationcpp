@@ -5,6 +5,8 @@
 #include <deque>
 #include <list>
 #include <array>
+#include <fstream>
+#include <sstream>
 
 using namespace std;
 
@@ -156,6 +158,12 @@ int main()
 {
 	Point p1{ 2, 3 };
 	cout << "p:" << p1 << endl;
+	ofstream {"p.txt"} << p1 << "\n"; // fopen à bannir
+
+	ostringstream oss;
+	oss << p1 << "ok\n";
+	cout << oss.str() << endl;
+
 	Point p2{ 4, 5 };
 	Point p3{ p1 + p2 };
 	Point p4{ p1 - p2 };
