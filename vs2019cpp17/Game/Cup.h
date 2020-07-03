@@ -7,7 +7,7 @@ using std::endl;
 namespace Agaz {
 	class Cup {
 	private:
-		vector<Dice> dices;
+		vector<Dice> dices; // nb de dés frozen
 		
 	public:
 		Cup(unsigned nbDices) : dices(nbDices) {

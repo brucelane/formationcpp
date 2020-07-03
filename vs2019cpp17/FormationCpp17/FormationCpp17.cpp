@@ -130,7 +130,9 @@ public:
 		return Point{ this->x + other.x,this->y + other.y };
 	}
 	Point operator - (const Point& other) const {
-		return Point{ this->x - other.x,this->y - other.y };
+		//Point copy{ *this }; copy -= other; return copy;
+		return Point{ *this } -= other; // copie utilise -= operateur
+		//return Point{ this->x - other.x,this->y - other.y };
 	}	
 	Point operator -= (const Point& other)  {
 		this->x -= other.x;
@@ -138,17 +140,22 @@ public:
 		return *this;
 	}
 	Point operator * (int n) const {
-		return Point{ this->x * n,this->y * n };
+		return Point{ x * n, y * n }; // this facultatif
 	}
-	Point operator *= (int n) {
+	Point& operator *= (int n) {
 		this->x -= n;
 		this->y -= n;
 		return *this;
 	}
+	friend ostream& operator << (ostream& o, const Point& pt) {
+		return o << "(" << pt.x << ", " << pt.y << ")";
+	}
 };
+
 int main()
 {
 	Point p1{ 2, 3 };
+	cout << "p:" << p1 << endl;
 	Point p2{ 4, 5 };
 	Point p3{ p1 + p2 };
 	Point p4{ p1 - p2 };
@@ -156,6 +163,7 @@ int main()
 	p5 -= p2;
 	p2 *= 5;
 	int tab[3];//tab[3]=12 pas d'exception ça plante... ne plus utiliser  les tableaux []
+	// lol p5.operator+(p2);
 	cout << "fin" << endl;
 /*	try
 	{
