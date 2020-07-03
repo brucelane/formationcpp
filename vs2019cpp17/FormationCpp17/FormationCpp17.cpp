@@ -159,10 +159,48 @@ public:
 	}
 };
 // utiliser set pour remplacer map dans vd? multiset si doublons
+enum class Genre {AUDIO, IMAGE, SEQUENCE};
+using Code = string;
+using Titre = string;
+using Auteur = string;
+using Duree = unsigned;
+
+class Texture {
+private:
+	const Titre titre;
+	const Genre genre;
+protected: // pas accessible, que des sous-classes dérivées
+	//Texture() = default;
+	Texture(const Titre& titre, Genre genre) :
+		titre{ titre },
+		genre{ genre}
+	{};
+	string name{ "" };
+public:
+	void doThis() {};
+	virtual void doIt() = 0;
+};
+class TAudio : public Texture {
+	const Code code;
+	const Duree duree;
+public:
+	TAudio(const Titre& titre, Auteur auteur, Duree duree) : Texture{ titre, Genre::AUDIO }, code{ code }, duree{ duree } {};
+	void doIt() override { name = ""; };
+};
+class TImage : public Texture {
+	const Auteur auteur;
+public:
+	TImage(const Titre& titre, Code code) : Texture{ titre, Genre::IMAGE }, auteur{ auteur } {};
+	void doIt() override { name = ""; };
+};
 int main()
 {
-	auto n{ 123.34 };
-	cout << typeid(n).name()  << endl;
+	// ctor protected impossible Texture ta{};
+	TAudio ta{"audio", "c99", 330};
+	ta.doThis();
+	TImage ti{"jpg", "bl"};
+
+
 	unordered_map <int, string> dico {
 		{1, "one"},
 		{2, "two"}
@@ -177,8 +215,10 @@ int main()
 	}
 	for (const pair<string,unsigned>& paire : dico) {
 		cout << paire.first << "" << paire.second << endl;
-	}*/
-	/*	Point p1{ 2, 3 };
+	}
+	auto n{ 123.34 };
+	cout << typeid(n).name()  << endl;
+		Point p1{ 2, 3 };
 	cout << "p:" << p1 << endl;
 	ofstream{ "p.txt" } << p1 << "\n"; // fopen à bannir
 
