@@ -4,6 +4,7 @@
 #include <ctime>
 #include <string>
 #include <set>
+#include <map>
 #include <list>
 #include <vector>
 #include <ostream>
@@ -17,7 +18,7 @@ using std::exception;
 using std::list;
 using std::vector;
 using std::ostream;
-//using std::sstream;
+using std::map;
 
 namespace Agaz {
 	using Value = unsigned;

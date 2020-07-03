@@ -7,8 +7,10 @@
 #include <array>
 #include <fstream>
 #include <sstream>
+#include <unordered_map>
 
 using namespace std;
+//using std::map;
 
 using Vitesse = int;
 using Acceleration = Vitesse;
@@ -159,7 +161,24 @@ public:
 // utiliser set pour remplacer map dans vd? multiset si doublons
 int main()
 {
-	Point p1{ 2, 3 };
+	auto n{ 123.34 };
+	cout << typeid(n).name()  << endl;
+	unordered_map <int, string> dico {
+		{1, "one"},
+		{2, "two"}
+	};
+	int n;
+	cout << "chiffre? => ";
+	cin >> n;
+	/*dico["t"] = 20;
+	dico["tu"] = 2;
+	for (const auto& paire : dico) {
+		cout << paire.first << "" << paire.second << endl;
+	}
+	for (const pair<string,unsigned>& paire : dico) {
+		cout << paire.first << "" << paire.second << endl;
+	}*/
+	/*	Point p1{ 2, 3 };
 	cout << "p:" << p1 << endl;
 	ofstream{ "p.txt" } << p1 << "\n"; // fopen à bannir
 
@@ -181,7 +200,7 @@ int main()
 	int tab[3];//tab[3]=12 pas d'exception ça plante... ne plus utiliser  les tableaux []
 	// lol p5.operator+(p2);
 	cout << "fin" << endl;
-	/*	try
+	try
 		{
 			array<int, 3> tab; //classe
 			tab.at(3) = 12;
