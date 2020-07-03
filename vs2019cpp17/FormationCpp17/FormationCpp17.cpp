@@ -7,7 +7,7 @@
 #include <array>
 #include <fstream>
 #include <sstream>
-#include <unordered_map>
+#include <map>
 
 using namespace std;
 //using std::map;
@@ -159,7 +159,7 @@ public:
 	}
 };
 // utiliser set pour remplacer map dans vd? multiset si doublons
-enum class Genre {AUDIO, IMAGE, SEQUENCE};
+
 using Code = string;
 using Titre = string;
 using Auteur = string;
@@ -168,47 +168,79 @@ using Duree = unsigned;
 class Texture {
 private:
 	const Titre titre;
-	const Genre genre;
 protected: // pas accessible, que des sous-classes dérivées
 	//Texture() = default;
-	Texture(const Titre& titre, Genre genre) :
-		titre{ titre },
-		genre{ genre}
+	Texture(const Titre& titre) :
+		titre{ titre }
 	{};
 	string name{ "" };
+	virtual void afficher(ostream &o) const noexcept = 0 {
+		o << titre << ", ";
+	};
 public:
-	void doThis() {};
-	virtual void doIt() = 0;
-};
+	friend ostream& operator<< (ostream& o, const Texture& tex) {
+		tex.afficher(o);
+		return o;
+	}
+	virtual ~Texture() { cout << "dtor tex" << endl; };
+};	
+
+enum class Genre {WAVE, LINEIN};
 class TAudio : public Texture {
-	const Code code;
 	const Duree duree;
-public:
-	TAudio(const Titre& titre, Auteur auteur, Duree duree) : Texture{ titre, Genre::AUDIO }, code{ code }, duree{ duree } {};
-	void doIt() override { name = ""; };
-};
-class TImage : public Texture {
 	const Auteur auteur;
+	const Genre genre;
+	//void doIt() override { name = ""; };
+	void afficher(ostream& o) const noexcept override {
+		Texture::afficher(o);
+		static const map<Genre, string> g { {Genre::WAVE, "wave"}, { Genre::LINEIN, "mic in" }};
+		o << auteur << g.at(genre) << duree;
+	};
 public:
-	TImage(const Titre& titre, Code code) : Texture{ titre, Genre::IMAGE }, auteur{ auteur } {};
-	void doIt() override { name = ""; };
+	TAudio(const Titre& titre, const Auteur& auteur, const Duree& duree, const Genre& genre ) : 
+		Texture{ titre }, 
+		duree{ duree },
+		genre{ genre } {}
+	
+	~TAudio() { cout << "dtor TAudio" << endl; };
+};
+
+class TImage : public Texture {
+	const Code code;
+	void afficher(ostream& o) const noexcept override {
+		Texture::afficher(o);
+		o << code ;
+	};
+public:
+	TImage(const Titre& titre, const Code& code) : 
+		Texture{ titre }, 
+		code{ code } {}
+	//void doIt() override { name = ""; };
+
+	~TImage() { cout << "dtor TImage" << endl; };
 };
 int main()
 {
 	// ctor protected impossible Texture ta{};
-	TAudio ta{"audio", "c99", 330};
-	ta.doThis();
-	TImage ti{"jpg", "bl"};
+	TAudio ta{ Titre {"song"}, Code {"c99"}, Duree{330}, Genre::WAVE };
+	//ta.afficher(cout);
+	TImage ti{ Titre {"jpg"}, Auteur {"bl"} };
+	//ti.afficher(cout);
+	Texture& t{ ti };
+	//t.afficher(cout);
+	cout << ta << endl << ti << endl << t << endl;
 
-
-	unordered_map <int, string> dico {
+	Texture* l{ new TImage { Titre {"jpg"}, Auteur {"bl"} } };
+	//l->afficher(cout);
+	delete l;
+/*	map <int, string> dico {
 		{1, "one"},
 		{2, "two"}
 	};
 	int n;
 	cout << "chiffre? => ";
 	cin >> n;
-	/*dico["t"] = 20;
+	dico["t"] = 20;
 	dico["tu"] = 2;
 	for (const auto& paire : dico) {
 		cout << paire.first << "" << paire.second << endl;
